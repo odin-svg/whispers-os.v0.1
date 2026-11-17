@@ -1,0 +1,12 @@
+Whispers-OS/
+├── .github/
+│   └── workflows/
+│       └── build-iso.yml
+└── config/
+    └── hooks/
+        └── live/
+            ├── 01-branding.hook.chroot
+            ├── 02-install-desktop.hook.chroot
+            ├── 03-plymouth-theme.hook.chroot
+            ├── 04-desktop-config.hook.chroot
+            └── 05-update-initramfs.hook.chroot
