@@ -1,0 +1,60 @@
+#!/bin/bash
+set -e
+
+mkdir -p /usr/share/wallpapers/Whispers
+convert -size 1920x1080 xc:"#0A0A0A" \
+    -fill "#141414" -draw "circle 960,540 960,100" \
+    -blur 0x80 \
+    /usr/share/wallpapers/Whispers/matte-dark.png
+
+mkdir -p /etc/skel/.config/Kvantum
+mkdir -p /etc/skel/Desktop
+
+# نسخ أيقونة مثبت النظام لسطح المكتب
+cp /usr/share/applications/calamares.desktop /etc/skel/Desktop/ 2>/dev/null || true
+chmod +x /etc/skel/Desktop/*.desktop 2>/dev/null || true
+
+# إعداد Kvantum
+cat > /etc/skel/.config/Kvantum/kvantum.kvconfig << 'EOF'
+[General]
+theme=KvArcDark
+EOF
+
+# إعداد KWin للشفافية والـ Blur مع الحفاظ على الأداء
+cat > /etc/skel/.config/kwinrc << 'EOF'
+[Compositing]
+Enabled=true
+Backend=OpenGL
+GLCore=true
+HiddenPreviews=5
+OpenGLIsUnsafe=false
+
+[Plugins]
+blurEnabled=true
+contrastEnabled=true
+
+[Effect-Blur]
+BlurStrength=5
+NoiseStrength=0
+
+[org.kde.kdecoration2]
+BorderSize=None
+Theme=Breeze
+EOF
+
+# إعداد الثيم العام والأيقونات
+cat > /etc/skel/.config/kdeglobals << 'EOF'
+[General]
+ColorScheme=BreezeDark
+widgetStyle=kvantum-dark
+
+[Icons]
+Theme=Papirus-Dark
+EOF
+
+# إعداد SDDM
+mkdir -p /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/whispers.conf << 'EOF'
+[Theme]
+Current=breeze
+EOF
