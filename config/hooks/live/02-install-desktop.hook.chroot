@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update
+apt-get install -y --no-install-recommends \
+    kde-plasma-desktop \
+    sddm \
+    konsole \
+    dolphin \
+    ark \
+    gwenview \
+    qt5-style-kvantum \
+    qt5-style-kvantum-themes \
+    papirus-icon-theme \
+    plymouth \
+    plymouth-themes \
+    imagemagick \
+    fonts-dejavu-core \
+    calamares \
+    calamares-settings-debian \
+    network-manager \
+    firmware-linux-free
+
+apt-get clean
